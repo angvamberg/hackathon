@@ -5,46 +5,37 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
-import com.stefanini.projeto.enums.SituacaoEnum;
-
 @Entity
-public class Dono implements Serializable{
+public class Carteira implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "SQ_DN_NU", sequenceName = "SQ_DN_NU", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_DN_NU")
-	@Column(name = "DN_NU")
+	@SequenceGenerator(name = "SQ_CA_NU", sequenceName = "SQ_CA_NU", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_CA_NU")
+	@Column(name = "CA_NU")
 	private Long id;
 
-	@Column(name = "DN_NO")
+	@Column(name = "CA_NO", length = 20, unique = true)
 	private String nome;
 
-	@Column(name = "DN_SIT")
-	@Enumerated(EnumType.STRING)
-	private SituacaoEnum situacao;
+	@OneToMany(mappedBy = "carteira")
+	private List<Moeda> moedas;
 
-	@OneToMany(mappedBy = "dono")
-	private List<Cachorro> cachorros;
-
-	public Dono() {
+	public Carteira() {
 		super();
 	}
 
-	public Dono(Long id, String nome, SituacaoEnum situacao) {
+	public Carteira(Long id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.situacao = situacao;
 	}
 
 	public Long getId() {
@@ -63,20 +54,12 @@ public class Dono implements Serializable{
 		this.nome = nome;
 	}
 
-	public SituacaoEnum getSituacao() {
-		return situacao;
+	public List<Moeda> getMoedas() {
+		return moedas;
 	}
 
-	public void setSituacao(SituacaoEnum situacao) {
-		this.situacao = situacao;
-	}
-	
-	public List<Cachorro> getCachorros() {
-		return cachorros;
-	}
-
-	public void setCachorros(List<Cachorro> cachorros) {
-		this.cachorros = cachorros;
+	public void setMoedas(List<Moeda> moedas) {
+		this.moedas = moedas;
 	}
 
 	@Override
@@ -95,7 +78,7 @@ public class Dono implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Dono other = (Dono) obj;
+		Carteira other = (Carteira) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

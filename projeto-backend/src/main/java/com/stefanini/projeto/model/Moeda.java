@@ -12,35 +12,31 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-public class Cachorro implements Serializable{
+public class Moeda implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "SQ_CA_NU", sequenceName = "SQ_CA_NU", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_CA_NU")
-	@Column(name = "CA_NU")
+	@SequenceGenerator(name = "SQ_MO_NU", sequenceName = "SQ_MO_NU", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_MO_NU")
+	@Column(name = "MO_NU")
 	private Long id;
 
-	@Column(name = "CA_NOME")
+	@Column(name = "MO_NOME")
 	private String nome;
-
-	@Column(name = "CA_IDADE")
-	private Integer idade;
 
 	@ManyToOne
 	@com.fasterxml.jackson.annotation.JsonIgnore
-	@JoinColumn(name = "DN_NU", referencedColumnName = "DN_NU")
-	private Dono dono;
+	@JoinColumn(name = "CA_NU", referencedColumnName = "CA_NU")
+	private Carteira carteira;
 
-	public Cachorro() {
+	public Moeda() {
 		super();
 	}
 
-	public Cachorro(String nome, Integer idade) {
+	public Moeda(String nome, Integer idade) {
 		super();
 		this.nome = nome;
-		this.idade = idade;
 	}
 
 	public Long getId() {
@@ -51,12 +47,12 @@ public class Cachorro implements Serializable{
 		this.id = id;
 	}
 
-	public Dono getDono() {
-		return dono;
+	public Carteira getCarteira() {
+		return carteira;
 	}
 
-	public void setDono(Dono dono) {
-		this.dono = dono;
+	public void setCarteira(Carteira carteira) {
+		this.carteira = carteira;
 	}
 
 	public String getNome() {
@@ -65,14 +61,6 @@ public class Cachorro implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public Integer getIdade() {
-		return idade;
-	}
-
-	public void setIdade(Integer idade) {
-		this.idade = idade;
 	}
 
 	@Override
@@ -91,7 +79,7 @@ public class Cachorro implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cachorro other = (Cachorro) obj;
+		Moeda other = (Moeda) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
