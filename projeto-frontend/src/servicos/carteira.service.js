@@ -11,6 +11,22 @@ class CarteiraService {
     getCarteiras() {
         return this.$http.get(this.path);
     }
+
+    getCarteirasByNome(nomeCarteira){
+        return this.$http.get(this.path+'/nome/'+nomeCarteira);
+    }
+
+    deleteCarteira(idCarteira){
+        return this.$http.delete(this.path+'/'+idCarteira);
+    }
+
+    updateCarteira(carteira){
+        return this.$http.put(this.path, carteira);
+    }  
+    
+    createCarteira(carteira){
+        return this.$http.post(this.path, carteira);
+    } 
 }
 
 export default angular.module('services.carteira-service', [])

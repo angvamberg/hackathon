@@ -1,14 +1,22 @@
 <div class="jumbotron">
-  <h1>Hello, {{vm.name}}</h1>
-
+  <h1>Pesquisa de {{vm.name}}</h1>
+  <h5>Informe o nome completo/parcial de uma carteira ou busque vazio para uma busca total.</h5><br>
+  <div ng-class="vm.cssMessage" ng-show="vm.visibleMessage">{{vm.messages}} <button ng-click="vm.resetarMensagens()" class="btn btn-secondary">X</button></span></div>
+  <hr>
   <div class="row">
-    
+    <div style="width:100%">
+    <form>
+        <input type="text" ng-model="vm.carteiraNome" style="width:100%; height:3em; border-radius: 4px" autocomplete="off" placeholder="Realizar busca" maxlength="20">
+        <button type="submit" ng-click="vm.procurar(vm.carteiraNome)" style="width:100%; height:3em" class="btn btn-dark">Pesquisar!</button><br><br>
+    </form>
+  </div>
     <table class="table table-hover table-dark">
       <thead>
         <tr>
           <th scope="col">#</th>
           <th scope="col">Carteira</th>
           <th scope="col">Qtd Moeda</th>
+          <th scope="col">Ações</th>
         </tr>
       </thead>
       <tbody ng-repeat='carteira in vm.carteiras'>
@@ -16,10 +24,73 @@
             <td>{{carteira.id}}</td>
             <td>{{carteira.nome}}</td>
             <td>{{carteira.moedas.length}}</td>
+            <td>
+              <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#editModal" ng-click="vm.selecionarCarteira(carteira)">Editar</button>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#confirmModal" ng-click="vm.selecionarCarteira(carteira)">Excluir</button>
+            </td>
         </tr>
       </tbody>
     </table>
     
   </div>
+  <!-- Modal Editar -->
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <form>
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editModalLabel">Editar Carteira</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-hover table-dark">
+              <input type="text" ng-model="vm.carteiraSelecionada.nome" style="width:100%; height:3em; border-radius: 4px" autocomplete="off" maxlength="20" placeholder="Alterar nome da carteira.">           
+              <button type="submit" class="btn btn-secondary" ng-click="vm.atualizarCarteira(vm.carteiraSelecionada)" style="width:100%" data-dismiss="modal">Alterar nome</button><br><br>
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Nome da Moeda</th>
+                  <th scope="col">Ações</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat='moeda in vm.carteiraSelecionada.moedas'>
+                <tr>
+                  <td>{{moeda.id}}</td>
+                  <td>{{moeda.nome}}</td>
+                  <td><button class="btn btn-danger" ng-click="vm.excluirMoeda(moeda)">Excluir</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"  ng-click="vm.atualizarTabela()">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+    </div>
+    
+    <!-- Modal Confirmação -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Deseja realmente excluir?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="vm.excluir(vm.carteiraSelecionada)">Sim</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </div>

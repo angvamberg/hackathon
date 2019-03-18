@@ -11,12 +11,14 @@ import routing from './app.config';
 
 import carteira from './modulos/carteira/carteira.js';
 import home from './modulos/home/home.js';
+import cadastro from './modulos/cadastro/cadastro.js';
 
 angular
 .module('myApp', [
   uirouter,
   blockUI,
   carteira, 
-  home
+  home,
+  cadastro
 ])
 .config(routing);

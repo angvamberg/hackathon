@@ -1,0 +1,20 @@
+<div class="jumbotron">
+    <h2>Cadastros</h2>
+  <div ng-class="vm.cssMessage" ng-show="vm.visibleMessage">{{vm.messages}} <button ng-click="vm.resetarMensagens()" class="btn btn-secondary">X</button></span></div><br><br>
+  <h3>Cadastro de Carteira</h3>
+  <hr>
+    <form>
+      <input type="text" maxlength="20" placeholder="Nome da Carteira" ng-model="vm.carteira.nome">
+      <button type="submit" class="btn btn-secondary" ng-click="vm.cadastrarCarteira(vm.carteira)">Cadastrar Carteira!</button>
+    </form>
+  
+  <br> <h3>Cadastro de Moeda</h3>
+  <hr> 
+  <select name="multipleSelect" id="multipleSelect" ng-model="vm.opcao">     
+      <option value="">---Escolha uma Carteira---</option>
+      <option ng-repeat="carteira in vm.carteiras" value="{{carteira.id}}">{{carteira.nome}}</option>
+	</select><br>
+      <input type="text" maxlength="20" placeholder="Nome da Moeda" ng-model="vm.moeda.nome">
+      <button type="submit" class="btn btn-secondary" ng-click="vm.cadastrarMoeda(vm.opcao, vm.moeda)">Cadastrar Moeda!</button>
+</div>
+
