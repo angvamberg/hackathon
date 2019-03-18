@@ -53,7 +53,7 @@ public class CarteiraController {
 	@PutMapping
 	public ResponseEntity<Carteira> atualizar(@Valid @RequestBody Carteira carteira) throws TreinaException {
 		Carteira carteiraSalva;
-		carteiraSalva = service.save(carteira);
+		carteiraSalva = service.update(carteira);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
 				.buildAndExpand(carteiraSalva.getId()).toUri();
 		return ResponseEntity.created(uri).body(carteiraSalva);
@@ -64,6 +64,17 @@ public class CarteiraController {
 		Optional<Carteira> carteira;
 		try {
 			carteira = service.findById(id);
+			return ResponseEntity.ok(carteira);
+		} catch (TreinaException e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+	
+	@GetMapping("/nome/{nome}")
+	public ResponseEntity<List<Carteira>> buscarPeloNome(@Valid @PathVariable String nome) {
+		List<Carteira> carteira;
+		try {
+			carteira = service.findByName(nome);
 			return ResponseEntity.ok(carteira);
 		} catch (TreinaException e) {
 			return ResponseEntity.badRequest().build();

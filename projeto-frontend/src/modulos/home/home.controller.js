@@ -1,6 +1,6 @@
 export default class HomeController {
   constructor() {
-    this.name = 'Home';
+    this.name = 'Carteira de Moedas';
   }
   
 }
