@@ -24,7 +24,13 @@ public class CarteiraService {
 			return repository.findById(id);
 	}
 	
-	public Carteira save(Carteira carteira) throws Exception {
+	public Carteira save(Carteira carteira) throws TreinaException {
+		Iterable<Carteira> carteiras = repository.findAll();
+		for (Carteira carteira2 : carteiras) {
+			if (carteira.getNome().equals(carteira2.getNome())) {
+				throw new TreinaException("Já existe um cadastro com esse nome.");
+			}
+		}
 		return repository.save(carteira);
 	}
 

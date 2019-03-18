@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,13 +42,18 @@ public class CarteiraController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Carteira> salvar(@Valid @RequestBody Carteira carteira) {
+	public ResponseEntity<Carteira> salvar(@Valid @RequestBody Carteira carteira) throws TreinaException {
 		Carteira carteiraSalva;
-		try {
-			carteiraSalva = service.save(carteira);
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().build();
-		}
+		carteiraSalva = service.save(carteira);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
+				.buildAndExpand(carteiraSalva.getId()).toUri();
+		return ResponseEntity.created(uri).body(carteiraSalva);
+	}
+
+	@PutMapping
+	public ResponseEntity<Carteira> atualizar(@Valid @RequestBody Carteira carteira) throws TreinaException {
+		Carteira carteiraSalva;
+		carteiraSalva = service.save(carteira);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
 				.buildAndExpand(carteiraSalva.getId()).toUri();
 		return ResponseEntity.created(uri).body(carteiraSalva);
@@ -62,14 +69,10 @@ public class CarteiraController {
 			return ResponseEntity.badRequest().build();
 		}
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deletar(@PathVariable Long id) {
-		try {
-			service.delete(id);
-		} catch (TreinaException e) {
-			return ResponseEntity.badRequest().build();
-		}
-		return ResponseEntity.ok().body("Deleted.");
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void deletar(@PathVariable Long id) throws TreinaException {
+		service.delete(id);
 	}
 }

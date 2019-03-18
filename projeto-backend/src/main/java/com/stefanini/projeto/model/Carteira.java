@@ -3,6 +3,7 @@ package com.stefanini.projeto.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +11,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Carteira implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -22,10 +30,12 @@ public class Carteira implements Serializable {
 	@Column(name = "CA_NU")
 	private Long id;
 
-	@Column(name = "CA_NO", length = 20, unique = true)
+	@Size(max=20)
+	@Column(name = "CA_NO", unique = true)
 	private String nome;
 
-	@OneToMany(mappedBy = "carteira")
+	@Size(min = 0, max = 5, message = "Uma carteira deve possuir no máximo 5 moedas.")
+	@OneToMany(mappedBy = "carteira", cascade=CascadeType.REMOVE)
 	private List<Moeda> moedas;
 
 	public Carteira() {

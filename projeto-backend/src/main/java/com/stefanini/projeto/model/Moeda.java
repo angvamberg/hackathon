@@ -10,8 +10,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Moeda implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -22,11 +30,12 @@ public class Moeda implements Serializable{
 	@Column(name = "MO_NU")
 	private Long id;
 
+	@Size(max=20)
 	@Column(name = "MO_NOME")
 	private String nome;
 
 	@ManyToOne
-	@com.fasterxml.jackson.annotation.JsonIgnore
+	@NotNull
 	@JoinColumn(name = "CA_NU", referencedColumnName = "CA_NU")
 	private Carteira carteira;
 
