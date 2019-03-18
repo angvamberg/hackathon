@@ -18,6 +18,15 @@ export default function routing($stateProvider, $urlRouterProvider) {
         controllerAs: 'vm'
       }
       $stateProvider.state(carteiraState);
+
+      let cadastroState = {
+        name: 'cadastro',
+        url: '/cadastro',
+        templateUrl: './modulos/cadastro/cadastro.view.html',
+        controller: 'CadastroController',
+        controllerAs: 'vm'
+      }
+      $stateProvider.state(cadastroState);
       
       $urlRouterProvider.otherwise('/home')  
 }
