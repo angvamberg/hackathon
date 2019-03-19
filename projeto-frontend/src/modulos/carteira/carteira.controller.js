@@ -11,6 +11,13 @@ export default class CarteiraController {
     vm.messages = "";
     vm.cssMessage = "";
     vm.visibleMessage = false;
+    vm.carteira={};
+    vm.moeda={
+      nome:'',
+      carteira:{
+        id:''
+      }
+    };
 
     buscaTotal();
 
@@ -54,6 +61,8 @@ export default class CarteiraController {
 
     vm.selecionarCarteira=function(carteira){
       vm.carteiraSelecionada=carteira;
+      vm.moeda.carteira.id=vm.carteiraSelecionada.id;
+      vm.resetarMensagens();
     };
 
     vm.atualizarCarteira=function(carteira){
@@ -70,9 +79,44 @@ export default class CarteiraController {
       });
     }
 
+    vm.cadastrarCarteira=function(carteira){
+      carteiraService.updateCarteira(carteira).then(function(response){
+        vm.cssMessage = "message-table-correct";
+			  vm.messages = "Carteira cadastrada!";
+        vm.visibleMessage = true;
+        vm.carteira={};
+        buscaTotal();
+      }).catch(function(response){
+        vm.cssMessage = "message-table-incorret";
+			  vm.messages = "Erro... Verifique se já existe esse nome ou tente mais tarde.";
+        vm.visibleMessage = true;
+        vm.carteira={};
+        buscaTotal();
+      });
+    }
+
+    vm.cadastrarMoeda=function(moeda){
+      moedaService.createMoeda(moeda).then(function(response){
+        vm.carteiraSelecionada.moedas.push(response.data);
+        vm.moeda.nome='';
+        vm.cssMessage = "message-table-correct";
+			  vm.messages = "Moeda inserida.";
+        vm.visibleMessage = true;
+        vm.carteira={};
+        buscaTotal();
+      }).catch(function(response){
+        vm.cssMessage = "message-table-incorret";
+			  vm.messages = "Erro... Carteira está cheia.";
+        vm.visibleMessage = true;
+        vm.carteira={};
+        buscaTotal();
+      });
+    }
+
     vm.atualizarTabela=function(){
       carteiraService.getCarteiras().then(function abc(resp) {
         vm.carteiras = resp.data;
+        vm.resetarMensagens();
       });
     }
 

@@ -27,6 +27,7 @@ export default class CadastroController {
           vm.cssMessage = "message-table-correct";
           vm.messages = "Carteira inserida com sucesso.";
           vm.visibleMessage = true;
+          vm.carteira={};
           buscaTotal();
         }).catch(function(response){
           vm.cssMessage = "message-table-incorret";
@@ -41,6 +42,12 @@ export default class CadastroController {
           vm.cssMessage = "message-table-correct";
           vm.messages = "Moeda inserida com sucesso.";
           vm.visibleMessage = true;
+          vm.moeda={
+            nome:'',
+            carteira:{
+              id:''
+            }
+          };
           buscaTotal();
         }).catch(function(response){
           vm.cssMessage = "message-table-incorret";
