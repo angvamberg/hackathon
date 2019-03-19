@@ -2,6 +2,7 @@ package com.stefanini.projeto.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -52,5 +53,16 @@ public class MoedaController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deletar(@PathVariable Long id) throws TreinaException {
 			service.delete(id);
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Optional<Moeda>> buscarPeloId(@Valid @PathVariable Long id) {
+		Optional<Moeda> moeda;
+		try {
+			moeda = service.findById(id);
+			return ResponseEntity.ok(moeda);
+		} catch (TreinaException e) {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 }

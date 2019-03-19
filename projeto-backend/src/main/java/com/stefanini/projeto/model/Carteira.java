@@ -35,7 +35,6 @@ public class Carteira implements Serializable {
 	@Column(name = "CA_NO", unique = true)
 	private String nome;
 
-	@Size(min = 0, max = 5, message = "Uma carteira deve possuir no máximo 5 moedas.")
 	@OneToMany(mappedBy = "carteira", cascade=CascadeType.REMOVE)
 	private List<Moeda> moedas;
 

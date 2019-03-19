@@ -7,7 +7,8 @@
     <div style="width:100%">
     <form>
         <input type="text" ng-model="vm.carteiraNome" style="width:100%; height:3em; border-radius: 4px" autocomplete="off" placeholder="Realizar busca" maxlength="20">
-        <button type="submit" ng-click="vm.procurar(vm.carteiraNome)" style="width:100%; height:3em" class="btn btn-dark">Pesquisar!</button><br><br>
+        <button type="submit" ng-click="vm.procurar(vm.carteiraNome)" style="width:96%; height:3em" class="btn btn-dark">Pesquisar!</button>
+        <button type="submit" style="height:3em" class="btn btn-success" data-toggle="modal" data-target="#carteiraModal">+</button><br><br>
     </form>
   </div>
     <table class="table table-hover table-dark">
@@ -31,23 +32,30 @@
         </tr>
       </tbody>
     </table>
-    
+    <p ng-if="vm.carteiras.length==0">Não há registros na tabela. Comece inserido a primeira carteira!</p> 
   </div>
+
   <!-- Modal Editar -->
   <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-    <form>
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="editModalLabel">Editar Carteira</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Editar Carteira</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">  
+          <div ng-class="vm.cssMessage" ng-show="vm.visibleMessage">{{vm.messages}} <button ng-click="vm.resetarMensagens()" class="btn btn-secondary">X</button></span><hr></div>        
+          <form>
+            <input type="text" ng-model="vm.carteiraSelecionada.nome" style="width:100%; height:3em; border-radius: 4px" autocomplete="off" maxlength="20" placeholder="Alterar nome da carteira.">           
+            <button type="submit" class="btn btn-secondary" ng-click="vm.atualizarCarteira(vm.carteiraSelecionada)" style="width:100%" data-dismiss="modal">Alterar nome</button><br><br>
+          </form>
+          <form>
+              <input type="text" style="width:100%; height:3em; border-radius: 4px" ng-model="vm.moeda.nome" autocomplete="off" maxlength="20" placeholder="Nome da moeda.">           
+              <button type="submit" class="btn btn-success" style="width:100%" ng-click="vm.cadastrarMoeda(vm.moeda)">Cadastrar Moeda</button><br><br>
+          </form>          
             <table class="table table-hover table-dark">
-              <input type="text" ng-model="vm.carteiraSelecionada.nome" style="width:100%; height:3em; border-radius: 4px" autocomplete="off" maxlength="20" placeholder="Alterar nome da carteira.">           
-              <button type="submit" class="btn btn-secondary" ng-click="vm.atualizarCarteira(vm.carteiraSelecionada)" style="width:100%" data-dismiss="modal">Alterar nome</button><br><br>
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -63,13 +71,13 @@
                 </tr>
               </tbody>
             </table>
+            <p ng-if="vm.carteiraSelecionada.moedas.length==0">Não há registros na tabela. Comece inserido a primeira moeda!</p>                        
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal"  ng-click="vm.atualizarTabela()">Fechar</button>
           </div>
         </div>
       </div>
-    </form>
     </div>
     
     <!-- Modal Confirmação -->
@@ -91,6 +99,31 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Modal Cadastro Carteira -->
+  <div class="modal fade" id="carteiraModal" tabindex="-1" role="dialog" aria-labelledby="carteiraModalLabel" aria-hidden="true">
+    <form>
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="carteiraModalLabel">Cadastrar Carteira</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <input type="text" maxlength="20" placeholder="Nome da Carteira" style="width:100%; height:3em; border-radius: 4px"  ng-model="vm.carteira.nome">
+              <button type="submit" class="btn btn-secondary" style="width:100%" data-dismiss="modal" ng-click="vm.cadastrarCarteira(vm.carteira)">Cadastrar Carteira!</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"  ng-click="vm.atualizarTabela()">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </form>
     </div>
 
 </div>
