@@ -3,6 +3,8 @@ package com.stefanini.projeto.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +36,9 @@ public class MoedaService {
 
 	public void delete(Long id) throws TreinaException {
 		repository.deleteById(id);
+	}
+
+	public Optional<Moeda> findById(@Valid Long id) throws TreinaException {
+			return repository.findById(id);
 	}
 }
