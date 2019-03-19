@@ -53,7 +53,7 @@ public class CarteiraController {
 	@PutMapping
 	public ResponseEntity<Carteira> atualizar(@Valid @RequestBody Carteira carteira) throws TreinaException {
 		Carteira carteiraSalva;
-		carteiraSalva = service.update(carteira);
+		carteiraSalva = service.save(carteira);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
 				.buildAndExpand(carteiraSalva.getId()).toUri();
 		return ResponseEntity.created(uri).body(carteiraSalva);

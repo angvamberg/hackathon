@@ -43,10 +43,4 @@ public class CarteiraService {
 	public List<Carteira> findByName(@Valid String nome) throws TreinaException  {
 		return repository.findAllByNomeContaining(nome);
 	}
-
-	public Carteira update(@Valid Carteira carteira) {
-		return repository.save(carteira);
-	}
-
-
 }
