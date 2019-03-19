@@ -4,7 +4,7 @@
   <h3>Cadastro de Carteira</h3>
   <hr>
     <form>
-      <input type="text" maxlength="20" placeholder="Nome da Carteira" ng-model="vm.carteira.nome">
+      <input type="text" maxlength="20" placeholder="Nome da Carteira" ng-model="vm.carteira.nome" style="width:30%">
       <button type="submit" class="btn btn-secondary" ng-click="vm.cadastrarCarteira(vm.carteira)">Cadastrar Carteira!</button>
     </form>
   
@@ -13,8 +13,10 @@
   <select name="multipleSelect" id="multipleSelect" ng-model="vm.opcao">     
       <option value="">---Escolha uma Carteira---</option>
       <option ng-repeat="carteira in vm.carteiras" value="{{carteira.id}}">{{carteira.nome}}</option>
-	</select><br>
-      <input type="text" maxlength="20" placeholder="Nome da Moeda" ng-model="vm.moeda.nome">
+  </select><br>
+    <form>
+      <input type="text" maxlength="20" placeholder="Nome da Moeda" ng-model="vm.moeda.nome" style="width:30%">
       <button type="submit" class="btn btn-secondary" ng-click="vm.cadastrarMoeda(vm.opcao, vm.moeda)">Cadastrar Moeda!</button>
+    </form>
 </div>
 
